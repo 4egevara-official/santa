@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Письмо Деду Морозу 🎅</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    min-height: 100vh;
+    background: linear-gradient(180deg, #0b1a3a 0%, #1e3a6f 40%, #4a6fa5 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  .snowflake {
+    position: fixed;
+    top: -50px;
+    color: white;
+    font-size: 1.5em;
+    opacity: 0.8;
+    animation: fall linear infinite;
+    pointer-events: none;
+    z-index: 1;
+  }
+  @keyframes fall {
+    to { transform: translateY(105vh) rotate(360deg); }
+  }
+
+  .container {
+    background: rgba(255, 255, 255, 0.97);
+    border-radius: 24px;
+    padding: 40px 35px;
+    max-width: 520px;
+    width: 100%;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+    position: relative;
+    z-index: 2;
+    animation: appear 0.8s ease-out;
+  }
+  @keyframes appear {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  h1 {
+    text-align: center;
+    color: #c0392b;
+    font-size: 1.8em;
+    margin-bottom: 8px;
+  }
+  .subtitle {
+    text-align: center;
+    color: #555;
+    font-size: 0.95em;
+    margin-bottom: 28px;
+  }
+
+  label {
+    display: block;
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 6px;
+    font-size: 0.9em;
+  }
+
+  input, textarea {
+    width: 100%;
+    padding: 12px 14px;
+    border: 2px solid #dfe6e9;
+    border-radius: 12px;
+    font-size: 1em;
+    font-family: inherit;
+    background: #fafbfc;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  input:focus, textarea:focus {
+    outline: none;
+    border-color: #2e86de;
+    box-shadow: 0 0 0 4px rgba(46, 134, 222, 0.15);
+  }
+
+  textarea {
+    resize: vertical;
+    min-height: 130px;
+    line-height: 1.5;
+  }
+
+  .field { margin-bottom: 18px; }
+
+  .btn {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    color: white;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.2s;
+    box-shadow: 0 6px 18px rgba(192, 57, 43, 0.4);
+    margin-top: 8px;
+  }
+  .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(192, 57, 43, 0.5);
+  }
+  .btn:active { transform: translateY(0); }
+  .btn:disabled { opacity: 0.7; cursor: default; transform: none; }
+
+  .error {
+    color: #c0392b;
+    font-size: 0.8em;
+    margin-top: 5px;
+    display: none;
+  }
+  input.invalid, textarea.invalid {
+    border-color: #e74c3c;
+    background: #fdf2f2;
+  }
+
+  .success {
+    display: none;
+    text-align: center;
+    padding: 20px 0;
+    animation: appear 0.5s ease-out;
+  }
+  .success .snow { font-size: 4em; margin-bottom: 15px; }
+  .success h2 { color: #27ae60; margin-bottom: 12px; }
+  .success p { color: #555; line-height: 1.6; margin-bottom: 20px; }
+  .success .again {
+    background: none;
+    border: 2px solid #c0392b;
+    color: #c0392b;
+    padding: 10px 24px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 1em;
+  }
+  .success .again:hover { background: #c0392b; color: white; }
+
+  @media (max-width: 480px) {
+    .container { padding: 28px 20px; }
+    h1 { font-size: 1.5em; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <form id="letterForm" novalidate>
+    <h1>🎅 Письмо Деду Морозу</h1>
+    <p class="subtitle">Напиши, что ты хочешь получить в Новом году!</p>
+
+    <div class="field">
+      <label for="name">Как тебя зовут? *</label>
+      <input type="text" id="name" placeholder="Например: Машенька" maxlength="50">
+      <div class="error" id="nameError">Пожалуйста, укажи имя</div>
+    </div>
+
+    <div class="field">
+      <label for="address">Куда приносить подарок? *</label>
+      <input type="text" id="address" placeholder="Город, улица, дом, квартира" maxlength="100">
+      <div class="error" id="addressError">Пожалуйста, укажи адрес</div>
+    </div>
+
+    <div class="field">
+      <label for="message">Твоё письмо *</label>
+      <textarea id="message" placeholder="Здравствуй, Дедушка Мороз! Я весь год вёл(а) себя хорошо и очень хочу..." maxlength="1000"></textarea>
+      <div class="error" id="messageError">Напиши хотя бы пару слов (мин. 10 символов)</div>
+    </div>
+
+    <button type="submit" class="btn" id="sendBtn">Отправить письмо 📨</button>
+  </form>
+
+  <div class="success" id="successScreen">
+    <div class="snow">❄️🎅❄️</div>
+    <h2>Письмо отправлено!</h2>
+    <p>Твоё письмо уже летит в Великий Устюг.<br>Дед Мороз обязательно прочитает его и подготовит подарок!</p>
+    <button class="again" id="againBtn">Написать ещё одно</button>
+  </div>
+</div>
+
+<script>
+  // Снежинки
+  const flakes = ['❄', '❅', '❆', '❄'];
+  for (let i = 0; i < 30; i++) {
+    const s = document.createElement('div');
+    s.className = 'snowflake';
+    s.textContent = flakes[Math.floor(Math.random() * flakes.length)];
+    s.style.left = Math.random() * 100 + 'vw';
+    s.style.fontSize = (Math.random() * 1.2 + 0.6) + 'em';
+    s.style.animationDuration = (Math.random() * 8 + 6) + 's';
+    s.style.animationDelay = (Math.random() * 8) + 's';
+    document.body.appendChild(s);
+  }
+
+  // ⚠️ ВАШ URL ВЕБ-ПРИЛОЖЕНИЯ GOOGLE APPS SCRIPT
+  const scriptURL = 'https://script.google.com/macros/s/AKfycbwOJTgRqbBWVggFUr54Gt_tavQO3QS7t50IJGPcwffw7J4aVO71gY3dIB49g82i8Zb0Lg/exec';
+
+  const form = document.getElementById('letterForm');
+  const nameEl = document.getElementById('name');
+  const addressEl = document.getElementById('address');
+  const messageEl = document.getElementById('message');
+  const successScreen = document.getElementById('successScreen');
+  const sendBtn = document.getElementById('sendBtn');
+
+  function showError(el, errorEl, show) {
+    el.classList.toggle('invalid', show);
+    errorEl.style.display = show ? 'block' : 'none';
+  }
+
+  [ [nameEl, 'nameError'], [addressEl, 'addressError'], [messageEl, 'messageError'] ]
+    .forEach(([input, errId]) => {
+      input.addEventListener('input', () => showError(input, document.getElementById(errId), false));
+    });
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const nameOk = nameEl.value.trim().length >= 2;
+    const addressOk = addressEl.value.trim().length >= 5;
+    const messageOk = messageEl.value.trim().length >= 10;
+
+    showError(nameEl, document.getElementById('nameError'), !nameOk);
+    showError(addressEl, document.getElementById('addressError'), !addressOk);
+    showError(messageEl, document.getElementById('messageError'), !messageOk);
+
+    if (!nameOk || !addressOk || !messageOk) {
+      const firstInvalid = [nameEl, addressEl, messageEl].find(el => el.classList.contains('invalid'));
+      if (firstInvalid) firstInvalid.focus();
+      return;
+    }
+
+    sendBtn.disabled = true;
+    sendBtn.textContent = 'Отправляем... ⏳';
+
+    const letter = {
+      name: nameEl.value.trim(),
+      address: addressEl.value.trim(),
+      message: messageEl.value.trim()
+    };
+
+    // Отправка в Google Таблицу через Apps Script
+    fetch(scriptURL, {
+      method: 'POST',
+      // text/plain — чтобы избежать проблем с CORS у Google Script
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify(letter)
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.result === 'success') {
+        form.style.display = 'none';
+        successScreen.style.display = 'block';
+      } else {
+        alert('Ошибка: ' + (data.message || 'Не удалось сохранить письмо'));
+        sendBtn.disabled = false;
+        sendBtn.textContent = 'Отправить письмо 📨';
+      }
+    })
+    .catch(error => {
+      console.error('Ошибка:', error);
+      alert('Не удалось отправить письмо. Проверьте интернет-соединение.');
+      sendBtn.disabled = false;
+      sendBtn.textContent = 'Отправить письмо 📨';
+    });
+  });
+
+  document.getElementById('againBtn').addEventListener('click', () => {
+    form.reset();
+    sendBtn.disabled = false;
+    sendBtn.textContent = 'Отправить письмо 📨';
+    successScreen.style.display = 'none';
+    form.style.display = 'block';
+    nameEl.focus();
+  });
+</script>
+
+</body>
+</html>
